@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LIENTS SUPER HUB</title>
+<title>Lients SuperHUB</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<meta name="theme-color" content="#24262a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lients SuperHUB">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--line:rgba(255,255,255,.3);--soft:rgba(255,255,255,.7);color-scheme:dark}
@@ -73,6 +81,7 @@ input{min-width:0;background:rgba(255,255,255,.1);border:1.5px solid var(--line)
 <div id="app"></div><div id="modal"></div><div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
+(function(){const m={name:'Lients SuperHUB',short_name:'Lients',start_url:location.pathname,scope:'/',display:'standalone',background_color:'#24262a',theme_color:'#24262a',icons:[{src:location.origin+'/icon-192.png',sizes:'192x192',type:'image/png'},{src:location.origin+'/icon-512.png',sizes:'512x512',type:'image/png'}]};const l=document.querySelector('link[rel=manifest]');if(l)l.href=URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}))})();
 const sb=supabase.createClient('https://yevsaamzvjroysfzblho.supabase.co','sb_publishable_25HhZg8DEY-eiXusBE9VQA_Tix4vWXK');
 const $=i=>document.getElementById(i),esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const SUPER='super-admin-el6an5',path=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'').toLowerCase();
@@ -88,7 +97,7 @@ mail:'<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3" f
 gen:'<svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.500 0l3-3a4 4 0 0 0-5.600-5.600l-1 1M14 10a4 4 0 0 0-5.500 0l-3 3a4 4 0 0 0 5.600 5.600l1-1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'};
 const NC={spotify:'n-spotify',deezer:'n-deezer',apple:'n-apple',sc:'n-sc'};
 const MAP=[['spotify','spotify','Spotify','btn'],['deezer','deezer','Deezer','btn'],['apple','apple','Apple Music','btn'],['soundcloud','sc','SoundCloud','btn'],['instagram','insta','Instagram','ico'],['tiktok','tiktok','TikTok','ico'],['youtu','yt','YouTube','ico']];
-const FT='<footer class="ft"><b>LIENTS SUPER HUB, tous les liens de ton artiste préféré au même endroit</b><span>Site créé par l’IA avec l’aide de <a href="https://www.instagram.com/loevanguerin" target="_blank" rel="noopener">Loévan Guérin</a> · <a href="/mentions-legales">Mentions légales</a></span></footer>';
+const FT='<footer class="ft"><img src="/icon-192.png" alt="" style="width:22px;height:22px;border-radius:6px;margin:0 auto 4px"><b>LIENTS SUPER HUB, tous les liens de ton artiste préféré au même endroit</b><span>Site créé par l’IA avec l’aide de <a href="https://www.instagram.com/loevanguerin" target="_blank" rel="noopener">Loévan Guérin</a> · <a href="/mentions-legales">Mentions légales</a></span></footer>';
 function fav(u){let h='';try{h=new URL(u).hostname}catch(e){}return '<img src="https://icons.duckduckgo.com/ip3/'+h+'.ico" alt="" data-h="'+h+'" style="width:26px;height:26px;border-radius:6px" onerror="fe(this)">'}
 function fe(i){if(!i.dataset.s){i.dataset.s=1;i.src='https://www.google.com/s2/favicons?sz=64&domain='+i.dataset.h}else i.outerHTML=ICON.gen}
 const OP='<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5H5V6h5"/></svg>';let A=null,AR=[],mode='pub',cred=null,menu=0,addRel=0,P={},timer,_cb;
@@ -109,7 +118,7 @@ function cc(x){navigator.clipboard.writeText(x);toast('Code copié')}
  if(data){A=data;A.links=A.links||[];return page()}
  gate();
 })();
-function home(){$('app').innerHTML='<main><h1>LIENTS SUPER HUB</h1><p class="desc">Tous les liens de ton artiste préféré au même endroit.</p></main>'+FT}
+function home(){$('app').innerHTML='<main><img src="/icon-192.png" alt="" style="width:96px;height:96px;border-radius:22px;margin-bottom:12px"><h1>LIENTS SUPER HUB</h1><p class="desc">Tous les liens de ton artiste préféré au même endroit.</p></main>'+FT}
 function legal(){$('app').innerHTML='<main class="lg"><h2>Mentions légales</h2><p><b>Éditeur du site.</b> Loévan Guérin, particulier. Contact : loevan.guerin@gmail.com</p><p><b>Hébergement.</b> Netlify, Inc. (netlify.com). Base de données : Supabase (supabase.com).</p><p><b>Données personnelles.</b> Le site enregistre uniquement ce que chaque artiste renseigne : nom, description, adresse e-mail de contact, images et liens. Ces informations sont affichées publiquement sur sa page. Chaque artiste peut les modifier ou les supprimer depuis son espace, ou en demander la suppression par e-mail à l’adresse ci-dessus. Aucune donnée n’est vendue ni utilisée à d’autres fins.</p><p><b>Contenus.</b> Chaque artiste est responsable des contenus et des liens qu’il publie.</p><p><a href="/">Retour</a></p></main>'+FT}
 /* ---------- accès admin artiste ---------- */
 function gate(){noidx();bgDef();$('app').innerHTML='<div class="gate"><h2>Entrer le code d’administrateur</h2><input id="code" type="password" placeholder="Code"><button class="btn" onclick="open2()">Entrer</button></div>'}
@@ -175,6 +184,7 @@ function page(){
  if(adm||A.description)h+='<div><p class="desc ph'+(adm?' ed':'')+'" data-ph="Courte description" data-k="description"'+E+'>'+esc(A.description)+'</p></div>';
  if(adm)h+='<div><span id="em" class="mail ph ed" data-ph="Ton e-mail" data-k="contact_email"'+E+'>'+esc(A.contact_email)+'</span></div>';
  else if(A.contact_email)h+='<a class="mail" href="mailto:'+esc(A.contact_email)+'">'+esc(A.contact_email)+'</a>';
+ if(R)h+='<hr class="sep" style="margin:18px 30px 0">';
  if(R)h+='<div class="release'+(R.cover&&R.cover.includes('ytimg.com')?' wide':'')+'"><div class="lab ph'+(adm?' ed':'')+'" data-ph="Titre de la section" data-k="rel.label"'+E+'>'+esc(R.label)+'</div><div class="rel"><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.cover?'<img class="cover" src="'+esc(R.cover)+'" alt="">':'<div class="cover"></div>')+'</a>'+(adm?'<button class="ic m x" onclick="delRel()">'+MIN+'</button>':'')+'</div><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.title?'<div class="rtitle">'+esc(R.title)+'</div>':'')+(R.artist?'<div class="rartist">'+esc(R.artist)+'</div>':'')+'</a></div>';
  else if(adm)h+=addRel?'<div class="row2"><input id="rl" placeholder="Coller le lien Spotify, YouTube…"><button class="btn" onclick="getRel()">Récupérer</button></div>':'<button class="add" onclick="addRel=1;page()"><i>+</i>Nouvelle sortie</button>';
  if(bt||adm)h+='<div class="music" style="margin-top:'+(R?22:30)+'px">'+bt+'</div>';
