@@ -17,12 +17,12 @@ main{position:relative;z-index:2;max-width:440px;margin:0 auto;padding:36px 22px
 .ic.m svg{stroke-width:4.6}
 .ic.nb{border:0;box-shadow:none;width:36px;height:36px}.ic.nb svg{width:26px;height:26px}
 .share{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:5}
-.bgpen{position:fixed;top:calc(14px + env(safe-area-inset-top));right:62px;z-index:5}
+.bgpen{position:fixed;top:calc(14px + env(safe-area-inset-top));left:14px;z-index:5}
 .fm{position:fixed;z-index:6}
-.sl{position:fixed;right:64px;top:calc(56px + env(safe-area-inset-top));height:20%;z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;font-weight:700}
+.sl{position:fixed;left:18px;top:calc(56px + env(safe-area-inset-top));height:20%;z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;font-weight:700}
 .sl input{writing-mode:vertical-lr;direction:rtl;height:100%;width:24px;padding:0;accent-color:#fff}
 .avatar{width:140px;height:140px;border-radius:50%;margin:0 auto;border:3px solid #fff;background-size:cover;background-position:center}
-.av{width:140px;margin:0 auto}.av .ic{position:absolute;right:-6px;bottom:2px}
+.av{width:140px;margin:0 auto}.av .ic{position:absolute;left:-6px;top:2px}
 .nmw{display:inline-block;position:relative;margin:16px 0 6px}
 .pn{position:absolute;top:-8px;right:-40px}
 h1{font-size:28px;font-weight:800;margin:0;outline:0}
@@ -37,6 +37,7 @@ h1{font-size:28px;font-weight:800;margin:0;outline:0}
 .cover{display:block;width:200px;height:200px;object-fit:cover;border-radius:12px;background:linear-gradient(140deg,#555,#222);box-shadow:0 8px 24px #0006}
 .x{position:absolute;top:-10px;right:-10px}
 .release a{display:block;color:inherit;text-decoration:none}
+.release.wide{width:280px}.release.wide .cover{width:280px;height:158px}
 .av{width:104px;margin:0 auto}.avatar{width:104px;height:104px}
 main{padding-top:28px}
 h1{font-size:22px;margin:0}.nmw{margin:10px 0 4px}.desc{font-size:13px;line-height:1.4;margin:0 0 6px}.mail{font-size:13px}
@@ -88,7 +89,8 @@ gen:'<svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.500 0l3-3a4 4 0 0 0-5.
 const NC={spotify:'n-spotify',deezer:'n-deezer',apple:'n-apple',sc:'n-sc'};
 const MAP=[['spotify','spotify','Spotify','btn'],['deezer','deezer','Deezer','btn'],['apple','apple','Apple Music','btn'],['soundcloud','sc','SoundCloud','btn'],['instagram','insta','Instagram','ico'],['tiktok','tiktok','TikTok','ico'],['youtu','yt','YouTube','ico']];
 const FT='<footer class="ft"><b>LIENTS SUPER HUB, tous les liens de ton artiste préféré au même endroit</b><span>Site créé par l’IA avec l’aide de <a href="https://www.instagram.com/loevanguerin" target="_blank" rel="noopener">Loévan Guérin</a> · <a href="/mentions-legales">Mentions légales</a></span></footer>';
-function fav(u){return '<img src="https://www.google.com/s2/favicons?sz=64&domain_url='+encodeURIComponent(u||'')+'" alt="" style="width:26px;height:26px;border-radius:6px" onerror="this.outerHTML=ICON.gen">'}
+function fav(u){let h='';try{h=new URL(u).hostname}catch(e){}return '<img src="https://icons.duckduckgo.com/ip3/'+h+'.ico" alt="" data-h="'+h+'" style="width:26px;height:26px;border-radius:6px" onerror="fe(this)">'}
+function fe(i){if(!i.dataset.s){i.dataset.s=1;i.src='https://www.google.com/s2/favicons?sz=64&domain='+i.dataset.h}else i.outerHTML=ICON.gen}
 const OP='<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5H5V6h5"/></svg>';let A=null,AR=[],mode='pub',cred=null,menu=0,addRel=0,P={},timer,_cb;
 function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2500)}
 function noidx(){const m=document.createElement('meta');m.name='robots';m.content='noindex';document.head.appendChild(m)}
@@ -167,13 +169,13 @@ function page(){
  const it=(l,i)=>'<div class="it"><a class="lk" '+(adm?'href="#" onclick="editL('+i+');return false"':'href="'+esc(l.u||'#')+'" target="_blank" rel="noopener"')+'>'+(l.k==='gen'?fav(l.u):(ICON[l.k]||ICON.gen))+(l.z==='btn'?'<span class="'+(NC[l.k]||'n-gen')+'">'+esc(l.n)+'</span>':'')+'</a></div>';
  const bt=L.map((l,i)=>l.z==='btn'?it(l,i):'').join(''),ic=L.map((l,i)=>l.z==='ico'?it(l,i):'').join('')+(A.contact_email?'<div class="it"><a class="lk" href="mailto:'+esc(A.contact_email)+'">'+ICON.mail+'</a></div>':'');
  let h='<button class="ic nb share" onclick="share()">'+SH+'</button>';
- if(adm)h+='<button class="ic bgpen" onclick="tm(2)">'+PEN+'</button>'+(menu==2?'<div class="fm" style="top:calc(14px + env(safe-area-inset-top));right:104px">'+mn(2)+'</div>':'')+'<div class="sl"><span>Flou</span><input type="range" min="0" max="100" value="'+A.blur+'" oninput="bl(this.value)" onchange="save({blur:+this.value})"></div>';
+ if(adm)h+='<button class="ic bgpen" onclick="tm(2)">'+PEN+'</button>'+(menu==2?'<div class="fm" style="top:calc(14px + env(safe-area-inset-top));left:56px">'+mn(2)+'</div>':'')+'<div class="sl"><span>Flou</span><input type="range" min="0" max="100" value="'+A.blur+'" oninput="bl(this.value)" onchange="save({blur:+this.value})"></div>';
  h+='<main class="'+(adm?'adm ':'')+(R?'':'list')+'"><div class="rel av"><div id="av" class="avatar"></div>'+(adm?'<button class="ic" onclick="tm(1)">'+PEN+'</button>':'')+'</div>'+(menu==1?mn(1):'');
  if(adm||A.name)h+='<div class="nmw"><h1 id="nm" class="ph'+(adm?' ed':'')+'" data-ph="Ton nom" data-k="name"'+E+'>'+esc(A.name)+'</h1></div>';
  if(adm||A.description)h+='<div><p class="desc ph'+(adm?' ed':'')+'" data-ph="Courte description" data-k="description"'+E+'>'+esc(A.description)+'</p></div>';
  if(adm)h+='<div><span id="em" class="mail ph ed" data-ph="Ton e-mail" data-k="contact_email"'+E+'>'+esc(A.contact_email)+'</span></div>';
  else if(A.contact_email)h+='<a class="mail" href="mailto:'+esc(A.contact_email)+'">'+esc(A.contact_email)+'</a>';
- if(R)h+='<div class="release"><div class="lab ph'+(adm?' ed':'')+'" data-ph="Titre de la section" data-k="rel.label"'+E+'>'+esc(R.label)+'</div><div class="rel"><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.cover?'<img class="cover" src="'+esc(R.cover)+'" alt="">':'<div class="cover"></div>')+'</a>'+(adm?'<button class="ic m x" onclick="delRel()">'+MIN+'</button>':'')+'</div><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.title?'<div class="rtitle">'+esc(R.title)+'</div>':'')+(R.artist?'<div class="rartist">'+esc(R.artist)+'</div>':'')+'</a></div>';
+ if(R)h+='<div class="release'+(R.cover&&R.cover.includes('ytimg.com')?' wide':'')+'"><div class="lab ph'+(adm?' ed':'')+'" data-ph="Titre de la section" data-k="rel.label"'+E+'>'+esc(R.label)+'</div><div class="rel"><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.cover?'<img class="cover" src="'+esc(R.cover)+'" alt="">':'<div class="cover"></div>')+'</a>'+(adm?'<button class="ic m x" onclick="delRel()">'+MIN+'</button>':'')+'</div><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.title?'<div class="rtitle">'+esc(R.title)+'</div>':'')+(R.artist?'<div class="rartist">'+esc(R.artist)+'</div>':'')+'</a></div>';
  else if(adm)h+=addRel?'<div class="row2"><input id="rl" placeholder="Coller le lien Spotify, YouTube…"><button class="btn" onclick="getRel()">Récupérer</button></div>':'<button class="add" onclick="addRel=1;page()"><i>+</i>Nouvelle sortie</button>';
  if(bt||adm)h+='<div class="music" style="margin-top:'+(R?22:30)+'px">'+bt+'</div>';
  if(bt&&ic)h+='<hr class="sep">';
