@@ -16,10 +16,10 @@ main{position:relative;z-index:2;max-width:440px;margin:0 auto;padding:36px 22px
 .ic svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.6;filter:drop-shadow(0 0 2px rgba(0,0,0,.5));stroke-linecap:round;stroke-linejoin:round}
 .ic.m svg{stroke-width:4.6}
 .ic.nb{border:0;box-shadow:none;width:36px;height:36px}.ic.nb svg{width:26px;height:26px}
-.share{position:fixed;top:calc(14px + env(safe-area-inset-top));left:14px;z-index:5}
-.bgpen{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:5}
+.share{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:5}
+.bgpen{position:fixed;top:calc(14px + env(safe-area-inset-top));right:62px;z-index:5}
 .fm{position:fixed;z-index:6}
-.sl{position:fixed;right:14px;top:calc(56px + env(safe-area-inset-top));height:20%;z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;font-weight:700}
+.sl{position:fixed;right:64px;top:calc(56px + env(safe-area-inset-top));height:20%;z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;font-weight:700}
 .sl input{writing-mode:vertical-lr;direction:rtl;height:100%;width:24px;padding:0;accent-color:#fff}
 .avatar{width:140px;height:140px;border-radius:50%;margin:0 auto;border:3px solid #fff;background-size:cover;background-position:center}
 .av{width:140px;margin:0 auto}.av .ic{position:absolute;right:-6px;bottom:2px}
@@ -37,6 +37,10 @@ h1{font-size:28px;font-weight:800;margin:0;outline:0}
 .cover{display:block;width:200px;height:200px;object-fit:cover;border-radius:12px;background:linear-gradient(140deg,#555,#222);box-shadow:0 8px 24px #0006}
 .x{position:absolute;top:-10px;right:-10px}
 .release a{display:block;color:inherit;text-decoration:none}
+.hd{display:flex;align-items:flex-start;gap:14px;text-align:left;margin:calc(-60px - env(safe-area-inset-top)) 0 0 -44px}
+.hd .av{width:130px;margin:0}.hd .avatar{width:130px;height:130px;margin:0}
+.hi{flex:1;min-width:0;padding-top:calc(70px + env(safe-area-inset-top))}
+.hi h1{font-size:26px;margin:0 0 6px}.hi .menu{margin:0 0 8px}.hi .desc{margin:0 0 8px}
 .rtitle{font-weight:700;margin-top:10px;font-size:15px;outline:0}.rartist{color:var(--soft);font-size:13px;font-weight:500;outline:0}
 .add{display:flex;width:max-content;align-items:center;gap:10px;margin:24px auto 6px;background:rgba(255,255,255,.1);border:1.5px solid var(--line);color:#fff;border-radius:999px;padding:9px 16px;font:700 14px Montserrat;cursor:pointer}
 .add i{display:inline-flex;width:22px;height:22px;border:2px solid #fff;border-radius:50%;align-items:center;justify-content:center;font-style:normal}
@@ -85,6 +89,7 @@ gen:'<svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.500 0l3-3a4 4 0 0 0-5.
 const NC={spotify:'n-spotify',deezer:'n-deezer',apple:'n-apple',sc:'n-sc'};
 const MAP=[['spotify','spotify','Spotify','btn'],['deezer','deezer','Deezer','btn'],['apple','apple','Apple Music','btn'],['soundcloud','sc','SoundCloud','btn'],['instagram','insta','Instagram','ico'],['tiktok','tiktok','TikTok','ico'],['youtu','yt','YouTube','ico']];
 const FT='<footer class="ft"><b>LIENTS SUPER HUB, tous les liens de ton artiste préféré au même endroit</b><span>Site créé par l’IA avec l’aide de <a href="https://www.instagram.com/loevanguerin" target="_blank" rel="noopener">Loévan Guérin</a> · <a href="/mentions-legales">Mentions légales</a></span></footer>';
+function fav(u){return '<img src="https://www.google.com/s2/favicons?sz=64&domain_url='+encodeURIComponent(u||'')+'" alt="" style="width:26px;height:26px;border-radius:6px" onerror="this.outerHTML=ICON.gen">'}
 const OP='<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5H5V6h5"/></svg>';let A=null,AR=[],mode='pub',cred=null,menu=0,addRel=0,P={},timer,_cb;
 function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2500)}
 function noidx(){const m=document.createElement('meta');m.name='robots';m.content='noindex';document.head.appendChild(m)}
@@ -106,7 +111,7 @@ function cc(x){navigator.clipboard.writeText(x);toast('Code copié')}
 function home(){$('app').innerHTML='<main><h1>LIENTS SUPER HUB</h1><p class="desc">Tous les liens de ton artiste préféré au même endroit.</p></main>'+FT}
 function legal(){$('app').innerHTML='<main class="lg"><h2>Mentions légales</h2><p><b>Éditeur du site.</b> Loévan Guérin, particulier. Contact : loevan.guerin@gmail.com</p><p><b>Hébergement.</b> Netlify, Inc. (netlify.com). Base de données : Supabase (supabase.com).</p><p><b>Données personnelles.</b> Le site enregistre uniquement ce que chaque artiste renseigne : nom, description, adresse e-mail de contact, images et liens. Ces informations sont affichées publiquement sur sa page. Chaque artiste peut les modifier ou les supprimer depuis son espace, ou en demander la suppression par e-mail à l’adresse ci-dessus. Aucune donnée n’est vendue ni utilisée à d’autres fins.</p><p><b>Contenus.</b> Chaque artiste est responsable des contenus et des liens qu’il publie.</p><p><a href="/">Retour</a></p></main>'+FT}
 /* ---------- accès admin artiste ---------- */
-function gate(){noidx();$('app').innerHTML='<div class="gate"><h2>Entrer le code d’administrateur</h2><input id="code" type="password" placeholder="Code"><button class="btn" onclick="open2()">Entrer</button></div>'}
+function gate(){noidx();bgDef();$('app').innerHTML='<div class="gate"><h2>Entrer le code d’administrateur</h2><input id="code" type="password" placeholder="Code"><button class="btn" onclick="open2()">Entrer</button></div>'}
 async function open2(){const c=$('code').value,{data}=await sb.rpc('artist_open',{p_admin_slug:path,p_code:c});
  if(!data){$('code').value='';toast('Code incorrect ou page introuvable');return}
  A=data;A.links=A.links||[];cred={s:path,c:c};mode='adm';page()}
@@ -116,6 +121,7 @@ function save(p){Object.assign(A,p);if(!cred)return;Object.assign(P,p);clearTime
 function sv(el){const k=el.dataset.k,v=el.textContent.trim();if(k.indexOf('rel.')===0)save({release:{...A.release,[k.slice(4)]:v}});else save({[k]:v})}
 const PAT=(()=>{const s=100,W=1000,H=1800;let d='';for(let k=-9;k<=6;k++){let x=k*2*s,y=H+s;d+='M'+x+' '+y;for(let n=0;n<22;n++){d+='H'+(x+=s)+'V'+(y-=s)}}
  return 'url("data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid slice"><rect width="100%" height="100%" fill="#2a2c30"/><path d="'+d+'" fill="none" stroke="#212326" stroke-width="88" stroke-linejoin="miter"/></svg>')+'")'})();
+function bgDef(){const b=$('bg');b.style.backgroundImage=PAT;b.style.filter='';$('ov').style.opacity=0}
 function fx(){const b=$('bg');if(A.bg_url){b.style.backgroundImage='url("'+A.bg_url+'")';b.style.filter='blur('+A.blur*0.2+'px)'}else{b.style.backgroundImage=PAT;b.style.filter=''}$('ov').style.opacity=A.bg_url?0.2+A.blur*0.004:0}
 function bl(v){A.blur=+v;fx()}
 function tm(t){menu=menu===t?0:t;page()}
@@ -138,12 +144,16 @@ function share(){const u=location.origin+'/'+A.public_slug;if(navigator.share)na
 /* ---------- nouvelle sortie ---------- */
 function delRel(){ask('Voulez-vous vraiment supprimer la nouvelle sortie ?',()=>{save({release:null});page()})}
 async function getRel(){let u=$('rl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;
- const E=u.includes('spotify')?'https://open.spotify.com/oembed?url=':u.includes('youtu')?'https://www.youtube.com/oembed?format=json&url=':u.includes('soundcloud')?'https://soundcloud.com/oembed?format=json&url=':null;let t='',c='',au='';
- try{if(E){const j=await(await fetch(E+encodeURIComponent(u))).json();t=j.title||'';c=j.thumbnail_url||'';au=j.author_name||''}}catch(e){}
- save({release:{label:'Nouvelle sortie',title:t||'Titre à saisir',artist:au||A.name||'',cover:c,url:u}});addRel=0;page()}
+ let t='',c='',au='';const q=encodeURIComponent(u);
+ const yt=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/);
+ try{if(u.includes('spotify')){const j=await(await fetch('https://open.spotify.com/oembed?url='+q)).json();t=j.title||'';c=j.thumbnail_url||''}
+ else{const j=await(await fetch('https://noembed.com/embed?url='+q)).json();t=j.title||'';c=j.thumbnail_url||'';au=j.author_name||''}}catch(e){}
+ if(yt)c='https://i.ytimg.com/vi/'+yt[1]+'/mqdefault.jpg';
+ if(!t&&!c){toast('Impossible de lire ce lien');return}
+ save({release:{label:'Nouvelle sortie',title:t,artist:au||A.name||'',cover:c,url:u}});addRel=0;page()}
 /* ---------- liens ---------- */
 function addL(){let u=$('nl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;const s=u.toLowerCase(),m=MAP.find(x=>s.includes(x[0]));
- save({links:[...A.links,m?{k:m[1],n:m[2],u:u,z:m[3]}:{k:'gen',n:'Mon site',u:u,z:'btn'}]});page()}
+ save({links:[...A.links,m?{k:m[1],n:m[2],u:u,z:m[3]}:{k:'gen',n:(()=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch(e){return 'Mon site'}})(),u:u,z:'btn'}]});page()}
 function lkf(f){const L=[...A.links];f(L);save({links:L});cm();page()}
 function mv(i,d){lkf(L=>{let j=i+d;while(L[j]&&L[j].z!==L[i].z)j+=d;if(!L[j])return;[L[i],L[j]]=[L[j],L[i]]})}
 function zn(i){lkf(L=>{L[i]={...L[i],z:L[i].z==='btn'?'ico':'btn'}})}
@@ -155,16 +165,17 @@ function page(){
  const adm=mode==='adm',R=A.release,L=A.links;
  document.title=A.name||'LIENTS SUPER HUB';if(adm)noidx();
  const E=adm?' contenteditable="true" onblur="sv(this)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();this.blur()}"':'';
- const it=(l,i)=>'<div class="it"><a class="lk" '+(adm?'href="#" onclick="editL('+i+');return false"':'href="'+esc(l.u||'#')+'" target="_blank" rel="noopener"')+'>'+(ICON[l.k]||ICON.gen)+(l.z==='btn'?'<span class="'+(NC[l.k]||'n-gen')+'">'+esc(l.n)+'</span>':'')+'</a></div>';
+ const it=(l,i)=>'<div class="it"><a class="lk" '+(adm?'href="#" onclick="editL('+i+');return false"':'href="'+esc(l.u||'#')+'" target="_blank" rel="noopener"')+'>'+(l.k==='gen'?fav(l.u):(ICON[l.k]||ICON.gen))+(l.z==='btn'?'<span class="'+(NC[l.k]||'n-gen')+'">'+esc(l.n)+'</span>':'')+'</a></div>';
  const bt=L.map((l,i)=>l.z==='btn'?it(l,i):'').join(''),ic=L.map((l,i)=>l.z==='ico'?it(l,i):'').join('')+(A.contact_email?'<div class="it"><a class="lk" href="mailto:'+esc(A.contact_email)+'">'+ICON.mail+'</a></div>':'');
  let h='<button class="ic nb share" onclick="share()">'+SH+'</button>';
- if(adm)h+='<button class="ic bgpen" onclick="tm(2)">'+PEN+'</button>'+(menu==2?'<div class="fm" style="top:56px;right:60px">'+mn(2)+'</div>':'')+'<div class="sl"><span>Flou</span><input type="range" min="0" max="100" value="'+A.blur+'" oninput="bl(this.value)" onchange="save({blur:+this.value})"></div>';
- h+='<main class="'+(adm?'adm ':'')+(R?'':'list')+'"><div class="rel av"><div id="av" class="avatar"></div>'+(adm?'<button class="ic" onclick="tm(1)">'+PEN+'</button>':'')+'</div>'+(menu==1?mn(1):'');
- if(adm||A.name)h+='<div class="nmw"><h1 id="nm" class="ph'+(adm?' ed':'')+'" data-ph="Ton nom" data-k="name"'+E+'>'+esc(A.name)+'</h1>'+(adm?'<button class="ic pn" onclick="$(\'nm\').focus()">'+PEN+'</button>':'')+'</div>';
- if(adm||A.description)h+='<div><p class="desc ph'+(adm?' ed':'')+'" data-ph="Courte description" data-k="description"'+E+'>'+esc(A.description)+'</p></div>';
- if(adm)h+='<div><div class="nmw" style="margin:0"><span id="em" class="mail ph ed" data-ph="Ton e-mail" data-k="contact_email"'+E+'>'+esc(A.contact_email)+'</span><button class="ic pn" onclick="$(\'em\').focus()">'+PEN+'</button></div></div>';
+ if(adm)h+='<button class="ic bgpen" onclick="tm(2)">'+PEN+'</button>'+(menu==2?'<div class="fm" style="top:calc(14px + env(safe-area-inset-top));right:104px">'+mn(2)+'</div>':'')+'<div class="sl"><span>Flou</span><input type="range" min="0" max="100" value="'+A.blur+'" oninput="bl(this.value)" onchange="save({blur:+this.value})"></div>';
+ h+='<main class="'+(adm?'adm ':'')+(R?'':'list')+'"><div class="hd"><div class="rel av"><div id="av" class="avatar"></div>'+(adm?'<button class="ic" onclick="tm(1)">'+PEN+'</button>':'')+'</div><div class="hi">'+(menu==1?mn(1):'');
+ if(adm||A.name)h+='<h1 id="nm" class="ph'+(adm?' ed':'')+'" data-ph="Ton nom" data-k="name"'+E+'>'+esc(A.name)+'</h1>';
+ if(adm||A.description)h+='<p class="desc ph'+(adm?' ed':'')+'" data-ph="Courte description" data-k="description"'+E+'>'+esc(A.description)+'</p>';
+ if(adm)h+='<div><span id="em" class="mail ph ed" data-ph="Ton e-mail" data-k="contact_email"'+E+'>'+esc(A.contact_email)+'</span></div>';
  else if(A.contact_email)h+='<a class="mail" href="mailto:'+esc(A.contact_email)+'">'+esc(A.contact_email)+'</a>';
- if(R)h+='<div class="release"><div class="lab ph'+(adm?' ed':'')+'" data-ph="Titre de la section" data-k="rel.label"'+E+'>'+esc(R.label)+'</div><div class="rel"><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.cover?'<img class="cover" src="'+esc(R.cover)+'" alt="">':'<div class="cover"></div>')+'</a>'+(adm?'<button class="ic m x" onclick="delRel()">'+MIN+'</button>':'')+'</div><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'><div class="rtitle">'+esc(R.title)+'</div><div class="rartist">'+esc(R.artist)+'</div></a></div>';
+ h+='</div></div>';
+ if(R)h+='<div class="release"><div class="lab ph'+(adm?' ed':'')+'" data-ph="Titre de la section" data-k="rel.label"'+E+'>'+esc(R.label)+'</div><div class="rel"><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.cover?'<img class="cover" src="'+esc(R.cover)+'" alt="">':'<div class="cover"></div>')+'</a>'+(adm?'<button class="ic m x" onclick="delRel()">'+MIN+'</button>':'')+'</div><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.title?'<div class="rtitle">'+esc(R.title)+'</div>':'')+(R.artist?'<div class="rartist">'+esc(R.artist)+'</div>':'')+'</a></div>';
  else if(adm)h+=addRel?'<div class="row2"><input id="rl" placeholder="Coller le lien Spotify, YouTube…"><button class="btn" onclick="getRel()">Récupérer</button></div>':'<button class="add" onclick="addRel=1;page()"><i>+</i>Nouvelle sortie</button>';
  if(bt||adm)h+='<div class="music" style="margin-top:'+(R?22:30)+'px">'+bt+'</div>';
  if(bt&&ic)h+='<hr class="sep">';
@@ -174,19 +185,19 @@ function page(){
  if(A.photo_url)$('av').style.backgroundImage='url("'+A.photo_url+'")';
  fx()}
 /* ---------- super-admin ---------- */
-async function superPage(){noidx();const {data}=await sb.auth.getSession();if(data.session)return list();
+async function superPage(){noidx();const {data}=await sb.auth.getSession();bgDef();if(data.session)return list();
  $('app').innerHTML='<div class="gate"><h2>Connexion super-admin</h2><input id="em" type="email" placeholder="Ton e-mail"><input id="pw" type="password" placeholder="Mot de passe"><button class="btn" onclick="login()">Entrer</button></div>'}
 async function login(){const {error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(error){toast('Identifiants incorrects');return}list()}
-async function list(){const {data,error}=await sb.from('artists').select('id,public_slug,admin_slug,name').order('created_at',{ascending:false});if(error){toast('Accès refusé');return}
+async function list(){bgDef();const {data,error}=await sb.from('artists').select('id,public_slug,admin_slug,name').order('created_at',{ascending:false});if(error){toast('Accès refusé');return}
  AR=data;let h='<main class="sup"><h2>Pages artistes</h2><button class="srow" onclick="artForm(-1)"><span>Créer un nouvel artiste</span><span class="ic">+</span></button>';
  data.forEach((a,i)=>{h+='<div class="srow"><div>'+esc(a.name||a.public_slug)+'<small>/'+esc(a.public_slug)+'</small></div><div class="gp"><button class="ic" onclick="cpRow('+i+')">'+CP+'</button><button class="ic" onclick="window.open(\'/\'+AR['+i+'].admin_slug)">'+OP+'</button><button class="ic" onclick="artForm('+i+')">'+PEN+'</button></div></div>'});
  $('app').innerHTML=h+'<button class="btn" style="margin-top:18px;padding:12px" onclick="sb.auth.signOut().then(()=>location.reload())">Se déconnecter</button></main>'}
 function sl(el){el.value=el.value.toLowerCase().replace(/[^a-z0-9-]/g,'')}
 function artForm(i){const a=i<0?{public_slug:'',admin_slug:''}:AR[i];
- mod('<h3>'+(i<0?'Créer un nouvel artiste':'Modifier l’artiste')+'</h3><label>Page publique</label><input id="ap" value="'+esc(a.public_slug)+'" placeholder="nom-de-l’artiste" oninput="sl(this);ck('+i+')"><label>Page admin</label><input id="aa" value="'+esc(a.admin_slug)+'" placeholder="adresse-admin" oninput="sl(this);ck('+i+')"><label>Code admin</label><input id="ac2" placeholder="'+(i<0?'Code (4 caractères minimum)':'Nouveau code (vide = inchangé)')+'" oninput="ck('+i+')"><button class="btn" id="cpi" onclick="cpInfo()" disabled style="opacity:.4">Copier les infos</button>'+(i<0?'':'<button class="dl" onclick="delA('+i+')"><span class="ic m">'+MIN+'</span>Supprimer la page de l’artiste</button>')+'<div class="bt"><button onclick="cm()">Annuler</button><button class="pr" onclick="saveA('+i+')">'+(i<0?'Créer':'Enregistrer')+'</button></div>');ck(i)}
+ mod('<h3>'+(i<0?'Créer un nouvel artiste':'Modifier l’artiste')+'</h3><label>Page publique</label><input id="ap" value="'+esc(a.public_slug)+'" placeholder="nom-de-l’artiste" oninput="sl(this);ck('+i+')"><label>Page admin</label><input id="aa" value="'+esc(a.admin_slug)+'" placeholder="adresse-admin" oninput="sl(this);ck('+i+')"><label>Code admin</label><input id="ac2" placeholder="'+(i<0?'Code (4 caractères minimum)':'Nouveau code (vide = inchangé)')+'" oninput="ck('+i+')"><button class="btn" id="cpi" onclick="cpInfo()" disabled style="opacity:.4">Copier le lien admin et le code</button>'+(i<0?'':'<button class="dl" onclick="delA('+i+')"><span class="ic m">'+MIN+'</span>Supprimer la page de l’artiste</button>')+'<div class="bt"><button onclick="cm()">Annuler</button><button class="pr" onclick="saveA('+i+')">'+(i<0?'Créer':'Enregistrer')+'</button></div>');ck(i)}
 function ck(i){const p=$('ap').value,a=$('aa').value,c=$('ac2').value;const dup=AR.some((r,j)=>j!==i&&(r.public_slug===p||r.admin_slug===p||r.public_slug===a||r.admin_slug===a));const ok=p&&a&&c.length>=4&&p!==a&&!dup;const b=$('cpi');b.disabled=!ok;b.style.opacity=ok?1:.4}
-function cpInfo(){const o=location.origin+'/';navigator.clipboard.writeText(o+$('ap').value+'\n'+o+$('aa').value+'\n'+$('ac2').value);toast('Infos copiées')}
-function cpRow(i){const o=location.origin+'/';navigator.clipboard.writeText(o+AR[i].public_slug+'\n'+o+AR[i].admin_slug);toast('Adresses copiées')}
+function cpInfo(){navigator.clipboard.writeText('Ton espace admin : '+location.origin+'/'+$('aa').value+'\nCode : '+$('ac2').value);toast('Lien admin et code copiés')}
+function cpRow(i){navigator.clipboard.writeText(location.origin+'/'+AR[i].admin_slug);toast('Lien admin copié')}
 async function saveA(i){const p=$('ap').value,a=$('aa').value,c=$('ac2').value;
  const r=i<0?await sb.rpc('super_create_artist',{p_pub:p,p_adm:a,p_code:c}):await sb.rpc('super_update_artist',{p_id:AR[i].id,p_pub:p,p_adm:a,p_code:c||null});
  if(r.error){toast(r.error.message);return}cm();list()}
