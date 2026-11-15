@@ -2,7 +2,7 @@
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lients SuperHUB</title>
-<link rel="manifest" href="/manifest.webmanifest">
+
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icon-180.png">
 <meta name="theme-color" content="#24262a">
@@ -25,6 +25,7 @@ main{position:relative;z-index:2;max-width:440px;margin:0 auto;padding:36px 22px
 .ic.m svg{stroke-width:4.6}
 .ic.nb{border:0;box-shadow:none;width:36px;height:36px}.ic.nb svg{width:26px;height:26px}
 .share{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:5}
+.inst{position:fixed;top:calc(14px + env(safe-area-inset-top));right:58px;z-index:5}
 .bgpen{position:fixed;top:calc(14px + env(safe-area-inset-top));left:14px;z-index:5}
 .fm{position:fixed;z-index:6}
 .sl{position:fixed;left:18px;top:calc(56px + env(safe-area-inset-top));height:20%;z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;font-weight:700}
@@ -81,11 +82,15 @@ input{min-width:0;background:rgba(255,255,255,.1);border:1.5px solid var(--line)
 <div id="app"></div><div id="modal"></div><div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
-(function(){const m={name:'Lients SuperHUB',short_name:'Lients',start_url:location.pathname,scope:'/',display:'standalone',background_color:'#24262a',theme_color:'#24262a',icons:[{src:location.origin+'/icon-192.png',sizes:'192x192',type:'image/png'},{src:location.origin+'/icon-512.png',sizes:'512x512',type:'image/png'}]};const l=document.querySelector('link[rel=manifest]');if(l)l.href=URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}))})();
+const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const SA=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const INS='<svg viewBox="0 0 24 24"><path d="M12 3v12M7 10.5l5 5 5-5M5 20h14" stroke-width="2.6"/></svg>';
+let DP=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();DP=e});
+(function(){if(IOS)return;const m={name:'Lients SuperHUB',short_name:'Lients',start_url:location.pathname,scope:'/',display:'standalone',background_color:'#24262a',theme_color:'#24262a',icons:[{src:location.origin+'/icon-192.png',sizes:'192x192',type:'image/png'},{src:location.origin+'/icon-512.png',sizes:'512x512',type:'image/png'}]};const l=document.createElement('link');l.rel='manifest';l.href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify(m));document.head.appendChild(l)})();
 const sb=supabase.createClient('https://yevsaamzvjroysfzblho.supabase.co','sb_publishable_25HhZg8DEY-eiXusBE9VQA_Tix4vWXK');
 const $=i=>document.getElementById(i),esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const SUPER='super-admin-el6an5',path=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'').toLowerCase();
-const PEN='<svg viewBox="0 0 24 24"><path d="M16.5 4.5l3 3L9 18l-4.5 1.5L6 15z" fill="#fff" stroke="#fff" stroke-width="1" stroke-linejoin="round"/><path d="M14.5 6.5l3 3M6 15l3 3" stroke="rgba(30,30,34,.8)" stroke-width="1.2"/></svg>',MIN='<svg viewBox="0 0 24 24"><path d="M7 12h10" stroke-linecap="round"/></svg>',CP='<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg>',SH='<svg viewBox="0 0 24 24"><circle cx="6.5" cy="5.5" r="3" fill="#fff"/><circle cx="6.5" cy="18.5" r="3" fill="#fff"/><circle cx="17.5" cy="12" r="3" fill="#fff"/><path d="M8.7 7.6l7 3M8.7 16.4l7-3" stroke-width="2.6"/></svg>';
+const PEN='<svg viewBox="0 0 24 24"><path d="M16.5 4.5l3 3L9 18l-4.5 1.5L6 15z" fill="#fff" stroke="#fff" stroke-width="1" stroke-linejoin="round"/><path d="M14.5 6.5l3 3M6 15l3 3" stroke="rgba(30,30,34,.8)" stroke-width="1.2"/></svg>',MIN='<svg viewBox="0 0 24 24"><path d="M7 12h10" stroke-linecap="round"/></svg>',CP='<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg>',SH='<svg viewBox="100 100 800 800"><path d="M452 201A325 325 0 1 0 731 732" fill="none" stroke="#fff" stroke-width="82"/><path d="M570 215L365 622H775" fill="none" stroke="#fff" stroke-width="96" stroke-linejoin="round"/><g fill="#fff" stroke="none"><circle cx="570" cy="215" r="112"/><circle cx="365" cy="622" r="112"/><circle cx="775" cy="622" r="112"/></g></svg>';
 const ICON={spotify:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1db954"/><path d="M6 9c4-1.2 8-.9 12 1M7 12.5c3.300-.9 6.500-.6 9.500 1M8 15.700c2.500-.6 5-.4 7 .7" stroke="#000" stroke-width="1.800" fill="none" stroke-linecap="round"/></svg>',
 deezer:'<svg viewBox="0 0 24 24"><g fill="#a238ff"><rect x="1" y="17" width="4" height="3"/><rect x="6" y="14" width="4" height="6"/><rect x="11" y="11" width="4" height="9"/><rect x="16" y="8" width="4" height="12"/></g></svg>',
 apple:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#fa2d48"/><path d="M10 17V7l7-1.500v10" stroke="#fff" stroke-width="1.800" fill="none"/><circle cx="8.500" cy="17.500" r="2" fill="#fff"/><circle cx="15.500" cy="16" r="2" fill="#fff"/></svg>',
@@ -121,10 +126,22 @@ function cc(x){navigator.clipboard.writeText(x);toast('Code copié')}
 function home(){$('app').innerHTML='<main><img src="/icon-192.png" alt="" style="width:96px;height:96px;border-radius:22px;margin-bottom:12px"><h1>LIENTS SUPER HUB</h1><p class="desc">Tous les liens de ton artiste préféré au même endroit.</p></main>'+FT}
 function legal(){$('app').innerHTML='<main class="lg"><h2>Mentions légales</h2><p><b>Éditeur du site.</b> Loévan Guérin, particulier. Contact : loevan.guerin@gmail.com</p><p><b>Hébergement.</b> Netlify, Inc. (netlify.com). Base de données : Supabase (supabase.com).</p><p><b>Données personnelles.</b> Le site enregistre uniquement ce que chaque artiste renseigne : nom, description, adresse e-mail de contact, images et liens. Ces informations sont affichées publiquement sur sa page. Chaque artiste peut les modifier ou les supprimer depuis son espace, ou en demander la suppression par e-mail à l’adresse ci-dessus. Aucune donnée n’est vendue ni utilisée à d’autres fins.</p><p><b>Contenus.</b> Chaque artiste est responsable des contenus et des liens qu’il publie.</p><p><a href="/">Retour</a></p></main>'+FT}
 /* ---------- accès admin artiste ---------- */
-function gate(){noidx();bgDef();$('app').innerHTML='<div class="gate"><h2>Entrer le code d’administrateur</h2><input id="code" type="password" placeholder="Code"><button class="btn" onclick="open2()">Entrer</button></div>'}
-async function open2(){const c=$('code').value,{data}=await sb.rpc('artist_open',{p_admin_slug:path,p_code:c});
- if(!data){$('code').value='';toast('Code incorrect ou page introuvable');return}
- A=data;A.links=A.links||[];cred={s:path,c:c};mode='adm';page()}
+function fk(){return 'fid:'+path}
+function lsg(k){try{return localStorage.getItem(k||fk())}catch(e){return null}}
+function lss(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsd(){try{localStorage.removeItem(fk())}catch(e){}}
+const b64=a=>btoa(String.fromCharCode(...new Uint8Array(a))),ub=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+function fidAsk(){mod('<h3>Activer Face ID ?</h3><p>La prochaine fois, tu pourras entrer avec Face ID au lieu de retaper ton code.</p><div class="bt"><button onclick="fidNo()">Plus tard</button><button class="pr" onclick="cm();fidOn()">Activer</button></div>')}
+function fidNo(){lss('fidno:'+path,'1');cm()}
+async function fidOn(){try{const c=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'Lients SuperHUB'},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:path,displayName:'Artiste'},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required'},timeout:60000}});lss(fk(),JSON.stringify({id:b64(c.rawId),code:cred.c}));toast('Face ID activé')}catch(e){toast('Face ID non disponible')}}
+async function fidGo(){try{const d=JSON.parse(lsg());await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:'public-key',id:ub(d.id)}],userVerification:'required',timeout:60000}});open2(d.code)}catch(e){toast('Face ID annulé')}}
+function inst(){if(DP){DP.prompt();DP=null;return}
+ mod('<h3>Installer l’application</h3><p>'+(IOS?'Dans Safari, appuie sur le bouton Partager en bas de l’écran, puis sur « Sur l’écran d’accueil ».':'Ouvre le menu du navigateur (trois points), puis choisis « Installer l’application » ou « Ajouter à l’écran d’accueil ».')+'</p><p style="color:var(--soft);font-size:13px">L’icône ouvrira directement cette page.</p><div class="bt"><button class="pr" onclick="cm()">OK</button></div>')}
+function gate(){noidx();bgDef();$('app').innerHTML='<div class="gate"><h2>Entrer le code d’administrateur</h2><input id="code" type="password" placeholder="Code"><button class="btn" onclick="open2()">Entrer</button>'+(lsg()?'<button class="btn" onclick="fidGo()">Se connecter avec Face ID</button>':'')+'</div>'}
+async function open2(c0){const c=c0||$('code').value,{data}=await sb.rpc('artist_open',{p_admin_slug:path,p_code:c});
+ if(!data){if($('code'))$('code').value='';if(c0)lsd();toast('Code incorrect ou page introuvable');return}
+ A=data;A.links=A.links||[];cred={s:path,c:c};mode='adm';page();
+ if(window.PublicKeyCredential&&!c0&&!lsg()&&!lsg('fidno:'+path))setTimeout(fidAsk,500)}
 /* ---------- enregistrement automatique ---------- */
 function save(p){Object.assign(A,p);if(!cred)return;Object.assign(P,p);clearTimeout(timer);
  timer=setTimeout(async()=>{const q=P;P={};const r=await sb.rpc('artist_update',{p_admin_slug:cred.s,p_code:cred.c,p_patch:q});toast(r.data?'Enregistré':'Erreur d’enregistrement')},500)}
@@ -177,7 +194,7 @@ function page(){
  const E=adm?' contenteditable="true" onblur="sv(this)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();this.blur()}"':'';
  const it=(l,i)=>'<div class="it"><a class="lk" '+(adm?'href="#" onclick="editL('+i+');return false"':'href="'+esc(l.u||'#')+'" target="_blank" rel="noopener"')+'>'+(l.k==='gen'?fav(l.u):(ICON[l.k]||ICON.gen))+(l.z==='btn'?'<span class="'+(NC[l.k]||'n-gen')+'">'+esc(l.n)+'</span>':'')+'</a></div>';
  const bt=L.map((l,i)=>l.z==='btn'?it(l,i):'').join(''),ic=L.map((l,i)=>l.z==='ico'?it(l,i):'').join('')+(A.contact_email?'<div class="it"><a class="lk" href="mailto:'+esc(A.contact_email)+'">'+ICON.mail+'</a></div>':'');
- let h='<button class="ic nb share" onclick="share()">'+SH+'</button>';
+ let h='<button class="ic nb share" onclick="share()">'+SH+'</button>'+(adm&&!SA?'<button class="ic nb inst" onclick="inst()">'+INS+'</button>':'');
  if(adm)h+='<button class="ic bgpen" onclick="tm(2)">'+PEN+'</button>'+(menu==2?'<div class="fm" style="top:calc(14px + env(safe-area-inset-top));left:56px">'+mn(2)+'</div>':'')+'<div class="sl"><span>Flou</span><input type="range" min="0" max="100" value="'+A.blur+'" oninput="bl(this.value)" onchange="save({blur:+this.value})"></div>';
  h+='<main class="'+(adm?'adm ':'')+(R?'':'list')+'"><div class="rel av"><div id="av" class="avatar"></div>'+(adm?'<button class="ic" onclick="tm(1)">'+PEN+'</button>':'')+'</div>'+(menu==1?mn(1):'');
  if(adm||A.name)h+='<div class="nmw"><h1 id="nm" class="ph'+(adm?' ed':'')+'" data-ph="Ton nom" data-k="name"'+E+'>'+esc(A.name)+'</h1></div>';
@@ -199,7 +216,7 @@ async function superPage(){noidx();const {data}=await sb.auth.getSession();bgDef
  $('app').innerHTML='<div class="gate"><h2>Connexion super-admin</h2><input id="em" type="email" placeholder="Ton e-mail"><input id="pw" type="password" placeholder="Mot de passe"><button class="btn" onclick="login()">Entrer</button></div>'}
 async function login(){const {error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(error){toast('Identifiants incorrects');return}list()}
 async function list(){bgDef();const {data,error}=await sb.from('artists').select('id,public_slug,admin_slug,name').order('created_at',{ascending:false});if(error){toast('Accès refusé');return}
- AR=data;let h='<main class="sup"><h2>Pages artistes</h2><button class="srow" onclick="artForm(-1)"><span>Créer un nouvel artiste</span><span class="ic">+</span></button>';
+ AR=data;let h=(SA?'':'<button class="ic nb inst" style="right:14px" onclick="inst()">'+INS+'</button>')+'<main class="sup"><h2>Pages artistes</h2><button class="srow" onclick="artForm(-1)"><span>Créer un nouvel artiste</span><span class="ic">+</span></button>';
  data.forEach((a,i)=>{h+='<div class="srow"><div>'+esc(a.name||a.public_slug)+'<small>/'+esc(a.public_slug)+'</small></div><div class="gp"><button class="ic" onclick="cpRow('+i+')">'+CP+'</button><button class="ic" onclick="window.open(\'/\'+AR['+i+'].admin_slug)">'+OP+'</button><button class="ic" onclick="artForm('+i+')">'+PEN+'</button></div></div>'});
  $('app').innerHTML=h+'<button class="btn" style="margin-top:18px;padding:12px" onclick="sb.auth.signOut().then(()=>location.reload())">Se déconnecter</button></main>'}
 function sl(el){el.value=el.value.toLowerCase().replace(/[^a-z0-9-]/g,'')}
