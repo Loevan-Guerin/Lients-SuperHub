@@ -212,7 +212,7 @@ function page(){
  if(R)h+='<hr class="sep" style="margin:18px 30px 0">';
  if(R)h+='<div class="release'+(R.cover&&R.cover.includes('ytimg.com')?' wide':'')+'"><div class="lab ph'+(adm?' ed':'')+'" data-ph="Titre de la section" data-k="rel.label"'+E+'>'+esc(R.label)+'</div><div class="rel"><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.cover?'<img class="cover" src="'+esc(R.cover)+'" alt="">':'<div class="cover"></div>')+'</a>'+(adm?'<button class="ic m x" onclick="delRel()">'+MIN+'</button>':'')+'</div><a '+(R.url?'href="'+esc(R.url)+'" target="_blank" rel="noopener"':'')+'>'+(R.title?'<div class="rtitle">'+esc(R.title)+'</div>':'')+(R.artist?'<div class="rartist">'+esc(R.artist)+'</div>':'')+'</a></div>';
  else if(adm)h+=addRel?'<div class="row2"><input id="rl" placeholder="Coller le lien Spotify, YouTube…"><button class="btn" onclick="getRel()">Récupérer</button></div>':'<button class="add" onclick="addRel=1;page()"><i>+</i>Nouvelle sortie</button>';
- if(bt||adm)h+='<div class="music'+(L.filter(l=>l.z==='btn').length>4?' two':'')+'" style="margin-top:'+(R?22:30)+'px">'+bt+'</div>';
+ if(bt||adm)h+='<div class="music'+(L.filter(l=>l.z==='btn').length>3?' two':'')+'" style="margin-top:'+(R?22:30)+'px">'+bt+'</div>';
  if(bt&&ic)h+='<hr class="sep">';
  if(ic)h+='<div class="soc">'+ic+'</div>';
  if(adm)h+='<div class="row2"><input id="nl" placeholder="Coller un lien (Spotify, Instagram…)"><button class="btn" onclick="addL()">Ajouter</button></div>';
